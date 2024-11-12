@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="music.css">
+</head>
+
+<body>
+    <div class="bg">
+        <div class="music">
+            <nav>
+                <div class="circle">
+                    <i class="fa-solid fa-angle-left"></i>
+
+                </div>
+                <div class="circle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </nav>
+
+            <img src="media/simg.jpg" alt="#">
+            <h5>Arjan Valley</h5>
+            <p class="h">Vithilesh Ft. Venkatesh</p>
+
+            <audio id="song">
+                <source src="media\audio1.mp3" type="audio/mpeg">
+                </source>
+            </audio>
+            <input type="range" value="0" id="progress"></input>
+            <div class="control">
+                <div><i class="fa-solid fa-backward"></i></div>
+                <div onclick="playPause()"><i id="controlIcon" class="fa-solid fa-play"></i></div>
+                <div><i class="fa-solid fa-forward"></i></div>
+            </div>
+        </div>
+    </div>
+   <script>
+
+        let song = document.getElementById("song");
+        let progress = document.getElementById("progress");
+        let controlIcon = document.getElementById("controlIcon");
+
+        song.onloademetadata = function () {
+            progress.max = song.duration;
+            progress.value = song.currentTime;
+
+        }
+        function playPause() {
+            if (controlIcon.classList.contains("fa-pause")) {
+                song.pause();
+                controlIcon.classList.remove("fa-pause");
+                controlIcon.classList.add("fa-play");
+            } else {
+                song.play();
+                controlIcon.classList.add("fa-pause");
+                controlIcon.classList.remove("fa-play");
+            }
+        }
+        if (song.play()) {
+            setInterval(() => {
+                progress.value = song.currentTime;
+            }, 500);
+        }
+        progress.onchange = function () {
+            song.play();
+            song.currentTime = progress.value;
+            controlIcon.classList.add("fa-pause");
+            controlIcon.classList.remove("fa-play");
+        }
+
+    </script> 
+
+</body>
+
+</html>
